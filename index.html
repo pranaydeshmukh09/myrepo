@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Pranay Deshmukh | DevOps Engineer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pranay Deshmukh | DevOps Learner</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-    <h1>Pranay Deshmukh</h1>
-    <p>Aspiring DevOps Engineer</p>
+    <h1 id="typing"></h1>
+    <p>DevOps Learner | Linux | Cloud | Automation</p>
+    <button id="toggleMode">🌙 Toggle Mode</button>
 </header>
 
 <nav>
@@ -24,52 +25,94 @@
 <section id="about">
     <h2>About Me</h2>
     <p>
-        Hello! I'm Pranay, a DevOps learner passionate about Linux, Git,
-        automation, and cloud technologies. I enjoy building practical
-        projects and improving my technical skills every day.
+        Passionate DevOps learner focused on Linux, Git, Docker,
+        AWS, and automation tools.
     </p>
 </section>
 
 <section id="skills">
     <h2>Skills</h2>
-    <ul>
-        <li>Linux</li>
-        <li>Git & GitHub</li>
-        <li>Shell Scripting</li>
-        <li>Networking Basics</li>
-        <li>DevOps Fundamentals</li>
-    </ul>
+
+    <div class="skill">
+        <p>Linux</p>
+        <div class="bar"><div class="progress" style="width:85%"></div></div>
+    </div>
+
+    <div class="skill">
+        <p>Git & GitHub</p>
+        <div class="bar"><div class="progress" style="width:90%"></div></div>
+    </div>
+
+    <div class="skill">
+        <p>Docker</p>
+        <div class="bar"><div class="progress" style="width:70%"></div></div>
+    </div>
+
 </section>
 
 <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="project">
-        <h3>Linux Log Analysis</h3>
-        <p>Analyzed system logs using Linux commands to detect errors and activities.</p>
-    </div>
-
-    <div class="project">
-        <h3>Shell Backup Script</h3>
-        <p>Created a shell script to automatically backup important directories.</p>
-    </div>
-
-    <div class="project">
-        <h3>DevOps Practice Repository</h3>
-        <p>Maintaining daily DevOps practice using Git and GitHub.</p>
-    </div>
-
+    <h2>GitHub Projects</h2>
+    <div id="github-projects">Loading projects...</div>
 </section>
 
 <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: pranay.deshmukh0409@gmail.com</p>
-    <p>GitHub: github.com/pranaydeshmukh09</p>
+    <h2>Contact Me</h2>
+
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send</button>
+    </form>
 </section>
 
 <footer>
-    <p>© 2026 Pranay Deshmukh</p>
+    © 2026 Pranay Deshmukh
 </footer>
+
+<script>
+// Typing Animation
+const text = "Hi, I'm Pranay 👋";
+let i = 0;
+function typeEffect(){
+    if(i < text.length){
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect,100);
+    }
+}
+typeEffect();
+
+// Dark Mode
+document.getElementById("toggleMode").addEventListener("click",()=>{
+    document.body.classList.toggle("dark");
+});
+
+// Scroll Animation
+const sections = document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+    sections.forEach(sec=>{
+        const top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+            sec.classList.add("show");
+        }
+    });
+});
+
+// GitHub Projects Fetch
+fetch("https://api.github.com/users/pranaydeshmukh09/repos")
+.then(res=>res.json())
+.then(data=>{
+    let output="";
+    data.slice(0,6).forEach(repo=>{
+        output += `<div class="project">
+                    <h3>${repo.name}</h3>
+                    <a href="${repo.html_url}" target="_blank">View</a>
+                   </div>`;
+    });
+    document.getElementById("github-projects").innerHTML = output;
+});
+</script>
 
 </body>
 </html>
